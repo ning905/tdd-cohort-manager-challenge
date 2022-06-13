@@ -49,9 +49,8 @@ class Cohort {
   }
 }
 
-class CohortManager extends Cohort {
+class CohortManager {
   constructor() {
-    super()
     this.cohorts = []
     this.studentID = 1
   }

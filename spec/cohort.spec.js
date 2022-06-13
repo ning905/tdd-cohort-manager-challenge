@@ -1,4 +1,4 @@
-const { CohortManager, Cohort, Student } = require('../cohort.js')
+const { CohortManager, Student } = require('../cohort.js')
 
 describe('CohortManager', () => {
   let codingSchool
@@ -29,15 +29,6 @@ describe('CohortManager', () => {
     'bangbang@catoogle.com'
   )
 
-  const studentCoffeeBean = coffeeBean
-  studentCoffeeBean.studentID = 1
-
-  const studentCopyCoffeeBean = copyCoffeeBean
-  studentCopyCoffeeBean.studentID = 3
-
-  const studentCopyCoffeeBean2 = copyCoffeeBean2
-  studentCopyCoffeeBean2.sudentID = 4
-
   beforeEach(() => {
     codingSchool = new CohortManager()
   })
@@ -53,11 +44,17 @@ describe('CohortManager', () => {
 
   it('can create a cohort with a valid name ', () => {
     // set up
-    const expected = new Cohort('cat')
+    const expected = {
+      name: 'cat',
+      capacity: 24,
+      students: []
+    }
     // execute
     const result = codingSchool.createCohort('cat')
     // verify
-    expect(expected).toEqual(result)
+    expect(expected.name).toEqual(result.name)
+    expect(expected.capacity).toEqual(result.capacity)
+    expect(expected.students).toEqual(result.students)
   })
 
   it('cannot create a cohort with the same name', () => {
@@ -84,14 +81,20 @@ describe('CohortManager', () => {
 
   it('can search for a cohort by cohort name', () => {
     // set up
-    const expected = new Cohort('cat')
+    const expected = {
+      name: 'cat',
+      capacity: 24,
+      students: []
+    }
     codingSchool.createCohort('cat')
     codingSchool.createCohort('rabbit')
     codingSchool.createCohort('bird')
     // execute
     const result = codingSchool.getCohortByName('cat')
     // verify
-    expect(expected).toEqual(result)
+    expect(expected.name).toEqual(result.name)
+    expect(expected.capacity).toEqual(result.capacity)
+    expect(expected.students).toEqual(result.students)
   })
 
   it('can return error when the cohort with the given name does not exist', () => {
@@ -108,7 +111,18 @@ describe('CohortManager', () => {
 
   it('can remove a cohort by cohort name', () => {
     // set up
-    const expected = [new Cohort('rabbit'), new Cohort('bird')]
+    const expected = [
+      {
+        name: 'rabbit',
+        capacity: 24,
+        students: []
+      },
+      {
+        name: 'bird',
+        capacity: 24,
+        students: []
+      }
+    ]
     codingSchool.createCohort('cat')
     codingSchool.createCohort('rabbit')
     codingSchool.createCohort('bird')
@@ -116,18 +130,39 @@ describe('CohortManager', () => {
     // execute
     const result = codingSchool.cohorts
     // verify
-    expect(expected).toEqual(result)
+    expect(expected.name).toEqual(result.name)
+    expect(expected.capacity).toEqual(result.capacity)
+    expect(expected.students).toEqual(result.students)
   })
 
   it('can add a student to a cohort', () => {
     // set up
     codingSchool.createCohort('cat')
-    const expected = new Cohort('cat', [studentCoffeeBean])
+    const expected = {
+      name: 'cat',
+      capacity: 24,
+      students: [
+        {
+          firstName: 'Coffee',
+          lastName: 'Bean',
+          githubUserName: 'coffeebeangithub',
+          email: 'coffeebean@catoogle.com',
+          studentID: 1
+        }
+      ]
+    }
     // execute
     codingSchool.addStudentToCohort(coffeeBean, 'cat')
     const result = codingSchool.getCohortByName('cat')
     // verify
-    expect(expected).toEqual(result)
+    expect(expected.name).toEqual(result.name)
+    expect(expected.capacity).toEqual(result.capacity)
+    expect(expected.students.firstName).toEqual(result.students.firstName)
+    expect(expected.students.lastName).toEqual(result.students.lastName)
+    expect(expected.students.githubUserName).toEqual(
+      result.students.githubUserName
+    )
+    expect(expected.students.email).toEqual(result.students.email)
   })
 
   it('cannot add a student when the cohort does not exist', () => {
@@ -166,14 +201,33 @@ describe('CohortManager', () => {
 
   it('can remove a student from a cohort', () => {
     // set up
-    const expected = new Cohort('cat', [studentCoffeeBean])
+    const expected = {
+      name: 'cat',
+      capacity: 24,
+      students: [
+        {
+          firstName: 'Coffee',
+          lastName: 'Bean',
+          githubUserName: 'coffeebeangithub',
+          email: 'coffeebean@catoogle.com',
+          studentID: 1
+        }
+      ]
+    }
     codingSchool.createCohort('cat')
     codingSchool.addStudentToCohort(bangBang, 'cat')
     codingSchool.addStudentToCohort(coffeeBean, 'cat')
     // execute
     const result = codingSchool.removeStudentFromCohort(bangBang, 'cat')
     // verify
-    expect(expected).toEqual(result)
+    expect(expected.name).toEqual(result.name)
+    expect(expected.capacity).toEqual(result.capacity)
+    expect(expected.students.firstName).toEqual(result.students.firstName)
+    expect(expected.students.lastName).toEqual(result.students.lastName)
+    expect(expected.students.githubUserName).toEqual(
+      result.students.githubUserName
+    )
+    expect(expected.students.email).toEqual(result.students.email)
   })
 
   it('cannot remove a student when the cohort is not found', () => {
@@ -200,14 +254,24 @@ describe('CohortManager', () => {
 
   it('can search for a student by their student ID', () => {
     // set up
-    const expected = studentCoffeeBean
+    const expected = {
+      firstName: 'Coffee',
+      lastName: 'Bean',
+      githubUserName: 'coffeebeangithub',
+      email: 'coffeebean@catoogle.com',
+      studentID: 1
+    }
     codingSchool.createCohort('cat')
     codingSchool.addStudentToCohort(coffeeBean, 'cat')
     codingSchool.addStudentToCohort(bangBang, 'cat')
     // execute
     const result = codingSchool.getStudentByID(1)
     // verify
-    expect(expected).toEqual(result)
+    expect(expected.firstName).toEqual(result.firstName)
+    expect(expected.lastName).toEqual(result.lastName)
+    expect(expected.githubUserName).toEqual(result.githubUserName)
+    expect(expected.email).toEqual(result.email)
+    expect(expected.studentID).toEqual(result.studentID)
   })
 
   it('can return an error message if student ID is not found', () => {
@@ -225,9 +289,27 @@ describe('CohortManager', () => {
   it('can search for students by their first and last names', () => {
     // set up
     const expected = [
-      studentCoffeeBean,
-      studentCopyCoffeeBean2,
-      studentCopyCoffeeBean
+      {
+        firstName: 'Coffee',
+        lastName: 'Bean',
+        githubUserName: 'coffeebeangithub',
+        email: 'coffeebean@catoogle.com',
+        studentID: 1
+      },
+      {
+        firstName: 'Coffee',
+        lastName: 'Bean',
+        githubUserName: 'copycoffeebean2github',
+        email: 'copycoffeebean2@catoogle.com',
+        studentID: 4
+      },
+      {
+        firstName: 'Coffee',
+        lastName: 'Bean',
+        githubUserName: 'copycoffeebeangithub',
+        email: 'copycoffeebean@catoogle.com',
+        studentID: 3
+      }
     ]
     codingSchool.createCohort('cat')
     codingSchool.addStudentToCohort(coffeeBean, 'cat')
@@ -238,7 +320,11 @@ describe('CohortManager', () => {
     // execute
     const result = codingSchool.getStudentByName('Coffee', 'Bean')
     // verify
-    expect(expected).toEqual(result)
+    expect(expected.firstName).toEqual(result.firstName)
+    expect(expected.lastName).toEqual(result.lastName)
+    expect(expected.githubUserName).toEqual(result.githubUserName)
+    expect(expected.email).toEqual(result.email)
+    expect(expected.studentID).toEqual(result.studentID)
   })
 
   it('can return error if student of given name does not exist', () => {
