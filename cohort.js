@@ -15,8 +15,6 @@ class Cohort {
   }
 
   addStudent(newStudent) {
-    if (this.students.find((student) => student === newStudent)) {
-    }
     this.students.push(newStudent)
   }
 
