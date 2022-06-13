@@ -136,7 +136,7 @@ class CohortManager extends Cohort {
       )
       found = [...found, ...foundStudent]
     }
-    if (found.length != 0) {
+    if (found.length > 0) {
       return found
     }
     return 'Student not found'
