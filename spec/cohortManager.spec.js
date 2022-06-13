@@ -1,4 +1,5 @@
-const { CohortManager, Student } = require('../cohort.js')
+const { CohortManager } = require('../src/cohortManager.js')
+const { Student } = require('../src/student.js')
 
 describe('CohortManager', () => {
   let codingSchool
