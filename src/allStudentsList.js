@@ -114,7 +114,7 @@ addAllStudentsToCohorts(studentsApplied, manager.cohorts)
 // console.log('addAllStudentsToCohorts', cohort1)
 // console.log('addAllStudentsToCohorts', cohort2)
 // console.log('addAllStudentsToCohorts', cohort3)
-
+/*
 const allStudents = [
   ...cohort1.students,
   ...cohort2.students,
@@ -131,3 +131,14 @@ allStudents.sort((a, b) => {
 })
 
 console.log('allStudents', allStudents)
+*/
+
+console.log('removeCohortByName', manager.removeCohortByName('cohort1'))
+manager.clearCohortByName('cohort1')
+console.log('clearCohortByName', manager.clearCohortByName('cohort2'))
+console.log('all cohorts', manager.cohorts)
+console.log('original information', manager.getStudentByID(70))
+console.log(
+  'modifyStudentInfo',
+  manager.modifyStudentInfo(70, 'ningmagithub', 'ning@gmail.com')
+)

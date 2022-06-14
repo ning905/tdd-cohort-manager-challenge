@@ -27,10 +27,21 @@ class CohortManager {
   }
 
   removeCohortByName(name) {
-    if (this.getCohortByName(name)) {
+    const findCohort = this.getCohortByName(name)
+    if (findCohort && findCohort.students.length === 0) {
       const index = this.cohorts.indexOf(this.getCohortByName(name))
       this.cohorts.splice(index, 1)
       return this.cohorts
+    }
+    return false
+  }
+
+  clearCohortByName(name) {
+    const findCohort = this.getCohortByName(name)
+    if (findCohort) {
+      findCohort.students = []
+      this.removeCohortByName(name)
+      return 'Cohort and students removed'
     }
     return false
   }
@@ -73,6 +84,13 @@ class CohortManager {
       }
     }
     return 'Student not found'
+  }
+
+  modifyStudentInfo(ID, newGithub, newEmail) {
+    const findStudent = this.getStudentByID(ID)
+    findStudent.githubUserName = newGithub
+    findStudent.email = newEmail
+    return findStudent
   }
 
   getStudentByName(firstName, lastName) {
